@@ -1,46 +1,49 @@
 from simplex_method import *
 from visualization import color_print
 
-"""
+""" 
+    color_print -> colors: RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN
+    
     SET INITIAL CONDITIONS
 
     F(X) = sum(zX)
     AX <= b
     
     :np.array z: Вектор строка
-    :np.array A: Матрaица размерности len(b) x len(z)
+    :np.array A: Матрица размерности len(b) x len(z)
     :np.array b: Вектор строка    
-    :bool flag: Флаг для определния задачи минимизации/максимизации (по умолчанию максимизация)
+    :bool flag: Флаг для определения задачи минимизации/максимизации (по умолчанию максимизация)
                 True <--> maximization
                 False <--> minimization
 """
 
-z = np.array([-6, -5])   # -6x_1 + -5x_2
-                         # Наложенные ограничения
-A = np.array([[7, 3],    # 7x_1 + 3x_2 <= 1365
-              [6, 3],    # ...
-              [1, 2],
-              [-1, 0]])
+c = np.array([2, -2])
 
-b = np.array([1365, 1245, 650, -140])
-flag = False
+A = np.array([[1, 0],
+              [0, 6/4],
+              [6/3.5, 0],
+              [1,1]])
 
+b = np.array([4.5, 6, 6, 1])
+
+sign = np.array ([1, 1, 1, -1])
 
 if __name__ == "__main__":
-    point, func_value = simplex_method(z, A, b, flag)
 
-    #Небольшой навал красивого вывода
     func_string = 'F(X) = '
-    for i in range(len(z)):
-        func_string += str(z[i]) + f'x_{i + 1}'
-        if i < len(z) - 1:
+    for i in range(len(c)):
+        func_string += str(c[i]) + f'x_{i + 1}'
+        if i < len(c) - 1:
             func_string += ' + '
 
-    # colors: GREEN, YELLOW, BLUE, MAGENTA, CYAN
-    if flag:
-        color_print(f'При заданых условиях {func_string} --> max:', 'BLUE')
-    else:
-        color_print(f'При заданых условиях {func_string} --> min:', 'BLUE')
+    for mode in [1,-1]:
+        point, fval = simplex_method(mode * c, A, b, sign)
+        formatted_point = [f"{val:.2f}" for val in point]
 
-    formatted_point = [f"{val:.2f}" for val in point]
-    print(f' В точке x*: {formatted_point}\n F(x*) = {func_value:.2f}')
+        if mode == 1:
+            color_print(f'При заданных условиях {func_string} --> maximization:', 'RED')
+            print(f' В точке x*: {formatted_point}\n F(x*) = {fval:.2f}')
+
+        else:
+            color_print(f'При заданных условиях {func_string} --> minimization:', 'BLUE')
+            print(f' В точке x*: {formatted_point}\n F(x*) = {-fval:.2f}')
