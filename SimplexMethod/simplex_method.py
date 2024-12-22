@@ -1,5 +1,5 @@
 import numpy as np
-from simplex_tableau import create_tableau
+from SimplexMethod.simplex_tableau import create_tableau
 
 def simplex_method (c, A, b,sign, mode='max'):
     # Создаём симплекс таблицу (в задача лп в канон. форме)

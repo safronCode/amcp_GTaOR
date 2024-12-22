@@ -17,16 +17,17 @@ from visualization import color_print
                 False <--> minimization
 """
 
-c = np.array([2, -2])
+c = np.array([2, 2])
 
 A = np.array([[1, 0],
               [0, 6/4],
               [6/3.5, 0],
-              [1,1]])
+              [1, 0]])
 
-b = np.array([4.5, 6, 6, 1])
+b = np.array([4.5, 6, 6, 3])
 
-sign = np.array ([1, 1, 1, -1])
+
+sign = np.array ([1, 1, 1, 1])
 
 if __name__ == "__main__":
 
