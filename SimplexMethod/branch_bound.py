@@ -48,11 +48,11 @@ def branch_and_bound(c, A, b, sign):
             new_sign = np.append(current_sign, 1)
 
             lower_A = np.vstack([current_A, np.zeros(len(current_c))])
-            lower_A[-1, fractional_index] = 1  # x[fractional_index] <= floor(fractional_value)
+            lower_A[-1, fractional_index] = 1  
             lower_b = np.append(current_b, np.floor(fractional_value))
 
             upper_A = np.vstack([current_A, np.zeros(len(current_c))])
-            upper_A[-1, fractional_index] = -1  # x[fractional_index] >= ceil(fractional_value)
+            upper_A[-1, fractional_index] = -1  
             upper_b = np.append(current_b, -np.ceil(fractional_value))
 
             queue.append((current_c, lower_A, lower_b, new_sign))
