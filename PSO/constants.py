@@ -1,0 +1,11 @@
+NUM_PARTICLES = 30
+NUM_ITERATIONS = 100
+INERTIA = 0.5
+COGNITIVE = 2
+SOCIAL = 2
+
+
+BOUNDS = [[-100,100],[-100,100]]
+CONFIG_FILENAME = 'config/pso_config.json'
+DEFAULT_CONFIG_NAMES = ["num_particles","num_iterations","inertia","cognitive","social","bounds"]
+DEFAULT_PARTICLE = [NUM_PARTICLES, NUM_ITERATIONS,INERTIA, COGNITIVE, SOCIAL, BOUNDS]
