@@ -16,7 +16,7 @@ def branch_and_bound(c, A, b, sign):
     - Оптимальное значение целевой функции (или None, если нет решения).
     - Оптимальный вектор решений (или None, если нет решения).
     """
-    check_point = np.array([0, 0])
+    check_point = np.zeros(np.size(c))
     for mode in [1, -1]:
         point, fval = simplex_method(mode * c, A, b, sign)
         check_point = np.vstack([check_point, point])
