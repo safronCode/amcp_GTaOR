@@ -74,6 +74,43 @@ for iter in range(1, max_iter):
     x_store[iter, :, :] = x
     print("gbest_point = ", gbest)
 
+
+
+# Известные значения
+true_min_val = 0.292579
+true_min_point = (1.25313, 0)
+
+# График сходимости значения функции
+plt.figure()
+plt.plot(gbest_val, label="Процесс оптимизации")
+plt.axhline(y=true_min_val, color='r', linestyle='--', label="Истинное значение минимума")
+plt.axhline(y=-true_min_val, color='r', linestyle='--', label="Истинное значение -минимума")
+plt.xlabel('Итерации')
+plt.ylabel('Значение функции')
+plt.legend()
+plt.title("Сходимость значения функции")
+
+plt.figure()
+plt.plot(gbest_store[0, :], label="Траектория x[0]")
+plt.axhline(y=true_min_point[0], color='r', linestyle='--', label="Истинное значение x[0]")
+plt.axhline(y=-true_min_point[0], color='r', linestyle='--', label="Истинное значение -x[0]")
+plt.xlabel('Итерации')
+plt.ylabel('Значение x[0]')
+plt.legend()
+plt.title("Сходимость переменной x[0]")
+plt.grid()
+
+# График сходимости переменной x[1]
+plt.figure()
+plt.plot(gbest_store[1, :], label="Траектория x[1]")
+plt.axhline(y=true_min_point[1], color='r', linestyle='--', label="Истинное значение x[1]")
+plt.xlabel('Итерации')
+plt.ylabel('Значение x[1]')
+plt.legend()
+plt.title("Сходимость переменной x[1]")
+plt.grid()
+
+
 # Анимация
 fig, ax = plt.subplots(figsize=(8, 6))
 ax.set_xlim(xL[0], xU[0])
@@ -105,4 +142,4 @@ def animate(i):
 
 ani = animation.FuncAnimation(fig, animate, init_func=init, frames=max_iter, interval=50, blit=True)
 ani.save('pso_schaffer_animation.gif', fps=20)
-#plt.show()
+plt.show()
