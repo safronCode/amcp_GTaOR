@@ -36,6 +36,8 @@ def simplex_method(c, A, b, sign):
         b: правая часть ограничений (1D numpy array).
         sign: вектор (1D numpy array).
     """
+    iteration = 0
+    iter_fval = np.array([0])
 
     tableau = create_tableau(c, A, b, sign)
 
@@ -55,8 +57,8 @@ def simplex_method(c, A, b, sign):
         )
 
         if np.all(np.isinf(ratios)):
-            print("033[31m\033[21mФункционал не достигает экстремума в заданной области\033[0m")
-            return None, None
+            print("\033[21mФункционал не достигает экстремума в заданной области\033[0m")
+            return None, None, None
 
 
         rowIndex = np.argmin(ratios)
@@ -68,8 +70,11 @@ def simplex_method(c, A, b, sign):
         for i in range(tableau.shape[0]):
             if i != rowIndex:
                 tableau[i, :] -= tableau[i, columnIndex] * tableau[rowIndex, :]
+        iteration += 1
+
+        iter_fval = np.concatenate((iter_fval, [-tableau[-1, -1]]), axis=0)
 
     for i in range(len(basis)):
         point[basis[i] - 1] = tableau[i, -1]
 
-    return point[:len(c)], tableau[-1, -1]
+    return point[:len(c)], -tableau[-1, -1], [iteration, iter_fval]

@@ -37,10 +37,12 @@ print('\n'+'-'*100+'\n')
 
 
 start_time = time.time()
-point, fval = simplex_method(-c, A, b, sign)
+point, fval, _ = simplex_method(-c, A, b, sign)
 end_time = time.time()
 formatted_point = [f"{val:.2f}" for val in point]
 color_print(f'При заданных условиях --> maximization:', 'RED')
 print(f' В точке x*: {formatted_point}\n F(x*) = {-fval:.2f}')
 time_amcp = end_time - start_time
 print(f"Время выполнения: {time_amcp:.6f} секунд")
+
+print(_[0],_[1])

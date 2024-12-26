@@ -18,7 +18,7 @@ def branch_and_bound(c, A, b, sign):
     """
     check_point = np.zeros(np.size(c))
     for mode in [1, -1]:
-        point, fval = simplex_method(mode * c, A, b, sign)
+        point, fval, _ = simplex_method(mode * c, A, b, sign)
         check_point = np.vstack([check_point, point])
     check_point = np.delete(check_point, (0), axis=0)
 
@@ -58,4 +58,4 @@ def branch_and_bound(c, A, b, sign):
             queue.append((current_c, lower_A, lower_b, new_sign))
             queue.append((current_c, upper_A, upper_b, new_sign))
 
-    return best_solution, best_value
+    return best_solution, -best_value
