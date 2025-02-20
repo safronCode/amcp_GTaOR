@@ -1,5 +1,6 @@
 from package.methods.branch_bound import *
 from package.linker import *
+from scipy.optimize import linprog
 
 '''
     Решение задачи целочисленного линейного программирования с помощью метода ветвления и границ и симплекс-метода .
@@ -15,18 +16,22 @@ from package.linker import *
     - Оптимальный вектор решений (или None, если функционал не достигает экстремума).
 '''
 
-c = np.array([2, -2])
+rows, columns, rhs, bounds, integer_variables = parse_mps(path2mpc + 'gen-ip036.mps')  # path2mpc см. в package.helpers
+c = get_c(columns)
+b = get_b(rhs)
+A = get_A(columns, len(b), len(c))
+bounds = np.array([(0, None)] * len(c))
 
-A = np.array([[1, 0],
-              [0, 6/4],
-              [6/3.5, 0],
-              [1,1]])
 
-b = np.array([4.5, 6, 6, 1])
+fval, point = branch_and_bound(c, A, b, bounds)
+print('\033[21mРешение с помощью симплекс-метода (amcp):\n\033[0m\t\t\033[31m\033[21mMinimization\033[0m')
+print(f'Экстремальное значение функции: {-fval}')
+print(f'В точке x* : {point}')
 
-sign = np.array ([1, 1, 1, -1])
+res = linprog(c, A_ub=A, b_ub=b, bounds=bounds, method='highs')
+fval = res.fun
+point = res.x
 
-point, fval = branch_and_bound(c, A, b, sign)
-print('\033[21mРешение с помощью симплекс-метода (amcp):\033[0m\t\t\033[31m\033[21mMaximization\033[0m')
+print('\033[21mРешение с помощью симплекс-метода:\n\033[0m\t\t\033[31m\033[21mMinimization\033[0m')
 print(f'Экстремальное значение функции: {fval}')
 print(f'В точке x* : {point}')
